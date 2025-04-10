@@ -1,0 +1,29 @@
+name: Firebase Hosting Pull Request
+
+on:
+  push:
+    branches:
+      - main  # Or "master" if that's your default branch
+  pull_request:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build (optional)
+        run: echo "No build step for static site"
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRIENDLYEATS_WEB }}"
+          channelId: live
+          projectId: friendlyeats-web
+
